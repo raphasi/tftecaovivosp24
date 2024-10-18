@@ -214,6 +214,7 @@ nslookup -type=SOA tftecprime.cloud
 ```cmd
 https://punchsalad.com/ssl-certificate-generator/
 ```
+<p>Confira o <a href="https://punchsalad.com/ssl-certificate-generator/" target="_blank">freeCodeCamp</a>.</p>
 https://punchsalad.com/ssl-certificate-generator/
 
 1.2 Converter o certificado para PFX:
