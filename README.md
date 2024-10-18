@@ -186,44 +186,131 @@ Ajustar configuração do SQL Database:
    - Compute + Storage: Mudar opção de backup para LRS
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## STEP06 - Gerar certificados digitais
-1.0 Apontar registros NS (name server) do provedor público para o Azure (Passo já solicitado previamente).
-Testar a validação do DNS com o seguinte comando:
+## STEP05 - Deploy Apps Registration
+1.0 Criar o App Registration 01
 ```cmd
-nslookup -type=SOA tftecprime.cloud
+Cllicar em "Create a resource"
+Digitar a opção "Azure Active Directory B2C"
+Escolher "Create a new Azure AD B2C Tenant"
+Digitar um nome para a organização
+Digitar um domain name para a organização
+Escolher o Resource Group: rg-tftecsp
 ```
+1.1 Criar o App Registration 02
+```cmd
+Cllicar em "Create a resource"
+Digitar a opção "Azure Active Directory B2C"
+Escolher "Create a new Azure AD B2C Tenant"
+Digitar um nome para a organização
+Digitar um domain name para a organização
+Escolher o Resource Group: rg-tftecsp
+```
+1.2 Criar o App Registration 03
+```cmd
+Cllicar em "Create a resource"
+Digitar a opção "Azure Active Directory B2C"
+Escolher "Create a new Azure AD B2C Tenant"
+Digitar um nome para a organização
+Digitar um domain name para a organização
+Escolher o Resource Group: rg-tftecsp
+```
+1.3 Criar o App Registration 04
+```cmd
+Cllicar em "Create a resource"
+Digitar a opção "Azure Active Directory B2C"
+Escolher "Create a new Azure AD B2C Tenant"
+Digitar um nome para a organização
+Digitar um domain name para a organização
+Escolher o Resource Group: rg-tftecsp
+```
+
+## STEP06 - Configurar as variáveis de ambiente das aplicações
+1.0 Configurar as variáveis de ambiente da aplicação BEND (API)
+```cmd
+Acessar o endereço do webapp de BEND (API) complementando com o \swagger
+(Exemplo: https://appbendsp-dev.azurewebsites.net/swagger)
+Escolher a seção "Customer" e clicar no GET /api/Customer
+Clicar em "Try it out" e "execute"
+O resultado deve retornar o código 200 e uma lista com dados de clientes
+```
+
+1.1 Configurar as variáveis de ambiente da aplicação AUTH
+```cmd
+Acessar o endereço do webapp de BEND (API) complementando com o \swagger
+(Exemplo: https://appbendsp-dev.azurewebsites.net/swagger)
+Escolher a seção "Customer" e clicar no GET /api/Customer
+Clicar em "Try it out" e "execute"
+O resultado deve retornar o código 200 e uma lista com dados de clientes
+```
+
+1.2 Configurar as variáveis de ambiente da aplicação INGRESSO
+```cmd
+Acessar o endereço do webapp de BEND (API) complementando com o \swagger
+(Exemplo: https://appbendsp-dev.azurewebsites.net/swagger)
+Escolher a seção "Customer" e clicar no GET /api/Customer
+Clicar em "Try it out" e "execute"
+O resultado deve retornar o código 200 e uma lista com dados de clientes
+```
+
+1.3 Configurar as variáveis de ambiente da aplicação CRM
+```cmd
+Acessar o endereço do webapp de BEND (API) complementando com o \swagger
+(Exemplo: https://appbendsp-dev.azurewebsites.net/swagger)
+Escolher a seção "Customer" e clicar no GET /api/Customer
+Clicar em "Try it out" e "execute"
+O resultado deve retornar o código 200 e uma lista com dados de clientes
+```
+
+## STEP07 - Realizar primeira etapa de testes na aplicação
+1.0 Testar o acesso das APIs com o Azure SQL Database
+```cmd
+Acessar o endereço do webapp de BEND (API) complementando com o \swagger
+(Exemplo: https://appbendsp-dev.azurewebsites.net/swagger)
+Escolher a seção "Customer" e clicar no GET /api/Customer
+Clicar em "Try it out" e "execute"
+O resultado deve retornar o código 200 e uma lista com dados de clientes
+```
+1.1 Testar o acesso a aplicação CRM
+```cmd
+Acessar o endereço do webapp de CRM 
+Autenticar com uma conta do Entra ID que foi liberado o acesso durante o SETP05
+
+```
+1.2 Testar o acesso a aplicação INGRESSO
+```cmd
+Acessar o endereço do webapp de INGRESSO
+Validar se o site abriu corretamente carregando todas as imagens
+
+```
+1.2 Testar o acesso a aplicação AUTH
+```cmd
+Acessar o endereço do webapp de INGRESSO
+Validar se o site abriu corretamente carregando todas as imagens
+Acessar o endereço do webapp de BEND (API) complementando com o \swagger
+(Exemplo: https://appbendsp-dev.azurewebsites.net/swagger)
+Escolher a seção "Customer" e clicar no GET /api/Customer
+Clicar em "Try it out" e "execute"
+O resultado deve retornar o código 200 e uma lista com dados de clientes
+```
+
+
+
+
+
+## STEP06 - Deploy do Tenant do Azure B2C
+1.0 Criar um novo Azure Active Directory B2C
+```cmd
+Cllicar em "Create a resource"
+Digitar a opção "Azure Active Directory B2C"
+Escolher "Create a new Azure AD B2C Tenant"
+Digitar um nome para a organização
+Digitar um domain name para a organização
+Escolher o Resource Group: rg-tftecsp
+```
+
+
+
 1.1 Gerar um certificado digital válido:
-```cmd
-https://punchsalad.com/ssl-certificate-generator/
-```
-
-```markdown
-
-<a href="https://punchsalad.com/ssl-certificate-generator/" target="_blank">example</a>
-
-```
-<a href="https://punchsalad.com/ssl-certificate-generator/" target="_blank">example</a>
-<p>Confira o <a href="https://punchsalad.com/ssl-certificate-generator/" target="_blank">freeCodeCamp</a>.</p>
-<a href="https://punchsalad.com/ssl-certificate-generator/" target="_blank" rel="noopener"><span>Example Text</span> </a>.
-
 https://punchsalad.com/ssl-certificate-generator/
 
 1.2 Converter o certificado para PFX:
