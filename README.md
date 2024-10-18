@@ -212,7 +212,7 @@ nslookup -type=SOA tftecprime.cloud
 ```
 1.1 Gerar um certificado digital válido:
 ```cmd
-(https://punchsalad.com/ssl-certificate-generator/)
+https://punchsalad.com/ssl-certificate-generator/
 ```
 https://punchsalad.com/ssl-certificate-generator/
 
