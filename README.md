@@ -145,17 +145,32 @@ az login (ou utilizar o CloudShell)
 az webapp deploy --resource-group rg-azure --name <app-name> --src-path DeploymentGerenciador.zip
 ```
 
-## STEP03 - Deploy do Azure SQL Database
+## STEP03 - Deploy Virtual Machine
+1.0 Utilizaremos uma VM tamanho B2S e utilizar o sistema operacional Windows Server 2022.
+
+```cmd
+   Nome: vm-apps
+   Região: east-us
+   Vnet: vnet-hub
+   Subnet: sub-srv
+```
+
+## STEP04 - Deploy do Azure SQL Database
 1.0 Criar um novo SQL Server
 ```cmd
-Nome: sqlsrvtftecxxxxx (usar um nome único)
+Nome: srv-sql-tftecxxxxx (usar um nome único)
 Location: 
 Authentication method: Use SQL authentication   
    user: sqladmin
    pass: Partiunuvem@2024
 Allow Azure services and resources to access this server: YES
-
 ```
+1.1 Instalar o SSMS
+```cmd
+Acessar o servidor vm-apps e instalar o SQL Management Studio
+```
+https://aka.ms/ssmsfullsetup
+
 1.2 Importar database aplicação WebSite
 ```cmd
 Abrir o SQL Management Studio
@@ -165,53 +180,62 @@ Logar com usuário e senha criados no passo anterior
 Importar o database usando a opção de dacpac
 *Caso necessário, alterar o nome do database para: sistema-tftec-db
 ```
-
 1.3 Ajustar SQL Database
 ```cmd
 Ajustar configuração do SQL Database:
    - Compute + Storage: Mudar opção de backup para LRS
 ```
-2 - Apontar registros NS (name server) do provedor público para o Azure.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## STEP06 - Gerar certificados digitais
+1.0 Apontar registros NS (name server) do provedor público para o Azure (Passo já solicitado previamente).
 Testar a validação do DNS com o seguinte comando:
 ```cmd
 nslookup -type=SOA tftecprime.cloud
 ```
-3 - Gerar um certificado digital válido:
+1.1 Gerar um certificado digital válido:
+https://punchsalad.com/ssl-certificate-generator/
 
-Opções:
-
-OPÇÃO01: https://app.zerossl.com
-
-OPÇÃO02: https://punchsalad.com/ssl-certificate-generator/
-
-4 - Converter o certificado para PFX:
-
+1.2 Converter o certificado para PFX:
 https://www.sslshopper.com/ssl-converter.html
 
+1.3 repetir o passo de criação 3 vezes:
+ - Certificado para aplicação INGRESSO
+ - Certificado para aplicação BEND (api)
+ - Certificado para aplicação CRM
 
-## STEP06 - Deploy Azure Key Vault
+
+## STEP07 - Deploy Azure Key Vault
 1- Deploy Azure Key Vault:
 ```cmd
-   Nome: kvault-certs
-   Região: east-us
-   Private Endpoint: pvt-kvault
-   Usar pvt enpdoint na vnet-hub e subnet sub-pvtendp 
+   Nome: kvault-tftec-001
+   Região: uksouth
+   Configurar o acesso ao Key Vault como Access Policy
 ```
 
-2- Fazer upload do certificado PFX no Key Vault
+2- Fazer upload dos certificado PFX no Key Vault
 ```cmd
-   Como o acesso externo está desabilitado, upload do certificado precisa ser feito de uma VM do Azure.
-   Acessar a VM-APPS e fazer o upload do certificado.
-   ```
-3- Criar um managed identify e conceder permissão no Key Vault como:
-```cmd
-   Nome: svcappgwcert
-   Secret: Get
+   Fazer upload do certificado pfx da aplicação INGRESSO
+   Fazer upload do certificado pfx da aplicação CRM
+   Fazer upload do certificado pfx da aplicação BEND (API)
 ```
-
-5- Associar VNET-SPOKE02 a Zona de DNS do Private Endpoint
-   - Acessar a zona de dns criada pelo private endpoint: privatelink.database.windows.net 
-   - Associar a vnet-spoke02
 
 ## STEP07 - Deploy estrutura INTRANET
 1- Instalar IIS nas VMS vm-intra01 e vm-intra02:
