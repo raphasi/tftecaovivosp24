@@ -211,6 +211,9 @@ Testar a validação do DNS com o seguinte comando:
 nslookup -type=SOA tftecprime.cloud
 ```
 1.1 Gerar um certificado digital válido:
+```cmd
+(https://punchsalad.com/ssl-certificate-generator/)
+```
 https://punchsalad.com/ssl-certificate-generator/
 
 1.2 Converter o certificado para PFX:
