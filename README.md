@@ -214,6 +214,7 @@ nslookup -type=SOA tftecprime.cloud
 ```cmd
 https://punchsalad.com/ssl-certificate-generator/
 ```
+<a href="https://punchsalad.com/ssl-certificate-generator/" target="_blank">example</a>
 <p>Confira o <a href="https://punchsalad.com/ssl-certificate-generator/" target="_blank">freeCodeCamp</a>.</p>
 https://punchsalad.com/ssl-certificate-generator/
 
