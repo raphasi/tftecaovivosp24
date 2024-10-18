@@ -337,6 +337,32 @@ https://www.sslshopper.com/ssl-converter.html
    Fazer upload do certificado pfx da aplicação BEND (API)
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## STEP07 - Deploy estrutura INTRANET
 1- Instalar IIS nas VMS vm-intra01 e vm-intra02:
 ```cmd
