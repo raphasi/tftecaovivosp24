@@ -80,7 +80,7 @@ Write-Host "Peerings criados entre vnet-hub e vnet-web, vnet-hub e vnet-db"
    Runtime Stack: .NET 8
    Operation Sistem: Windows
    Region: uksouth
-   Escolher o App Service Plan criado no passo anterior
+   Escolher o App Service Plan criado no passo 1.0
 ```
 
 1.2 Criar o WebApp do Bend (API)
@@ -90,7 +90,7 @@ Write-Host "Peerings criados entre vnet-hub e vnet-web, vnet-hub e vnet-db"
    Runtime Stack: .NET 8
    Operation Sistem: Windows
    Region: uksouth
-   Escolher o App Service Plan criado no passo anterior
+   Escolher o App Service Plan criado no passo 1.0
 ```
 
 1.3 Criar o Webapp do CRM
@@ -100,7 +100,7 @@ Write-Host "Peerings criados entre vnet-hub e vnet-web, vnet-hub e vnet-db"
    Runtime Stack: .NET 8
    Operation Sistem: Windows
    Region: uksouth
-   Escolher o App Service Plan criado no passo anterior
+   Escolher o App Service Plan criado no passo 1.0
  ```
 
  1.4 Criar o Webapp do Auth
@@ -110,7 +110,7 @@ Write-Host "Peerings criados entre vnet-hub e vnet-web, vnet-hub e vnet-db"
    Runtime Stack: .NET 8
    Operation Sistem: Windows
    Region: uksouth
-   Escolher o App Service Plan criado no passo anterior
+   Escolher o App Service Plan criado no passo 1.0
  ```  
    
 
