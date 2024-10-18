@@ -169,7 +169,7 @@ Allow Azure services and resources to access this server: YES
 ```cmd
 Acessar o servidor vm-apps e instalar o SQL Management Studio
 ```
-https://aka.ms/ssmsfullsetup
+Download do SQL SSMS: https://aka.ms/ssmsfullsetup
 
 1.2 Importar database aplicação WebSite
 ```cmd
