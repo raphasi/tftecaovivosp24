@@ -8,12 +8,52 @@ O desenho de arquitetura informado abaixo mostra alguns detalhes de como está c
 
 ![TFTEC Cloud](https://github.com/raphasi/imersaoazure/blob/main/Arquitetura.png "Arquitetura Imersão")
 
-## STEP01 - Criar um Resource Group e aplicar Azure Policy
-1- Criar Resource Group
+## STEP01 - Criar um Resource Group e estrutura de VNETS e Subnets
+1- Script PowerShell para criar estrutura de rede inicial
 ```cmd
-   # Criar um Resource Group
-   Nome: rg-azure
-   Região: East US
+# Definir variáveis
+$resourceGroupName = "rg-tftecsp"
+$location = "eastus"
+
+# Criar o Resource Group
+New-AzResourceGroup -Name $resourceGroupName -Location $location
+
+# Criar vnet-hub e sua subnet
+$vnetHub = New-AzVirtualNetwork -ResourceGroupName $resourceGroupName -Location $location `
+    -Name "vnet-hub" -AddressPrefix 10.10.0.0/16
+
+Add-AzVirtualNetworkSubnetConfig -Name "sub-hub01" -AddressPrefix 10.10.1.0/24 -VirtualNetwork $vnetHub
+$vnetHub | Set-AzVirtualNetwork
+
+# Criar vnet-web e sua subnet
+$vnetWeb = New-AzVirtualNetwork -ResourceGroupName $resourceGroupName -Location $location `
+    -Name "vnet-web" -AddressPrefix 10.11.0.0/16
+
+Add-AzVirtualNetworkSubnetConfig -Name "sub-web01" -AddressPrefix 10.11.1.0/24 -VirtualNetwork $vnetWeb
+$vnetWeb | Set-AzVirtualNetwork
+
+# Criar vnet-db e sua subnet
+$vnetDb = New-AzVirtualNetwork -ResourceGroupName $resourceGroupName -Location $location `
+    -Name "vnet-db" -AddressPrefix 10.12.0.0/16
+
+Add-AzVirtualNetworkSubnetConfig -Name "sub-db01" -AddressPrefix 10.12.1.0/24 -VirtualNetwork $vnetDb
+$vnetDb | Set-AzVirtualNetwork
+
+# Criar peering entre vnet-hub e vnet-web
+Add-AzVirtualNetworkPeering -Name "HubToWeb" -VirtualNetwork $vnetHub -RemoteVirtualNetworkId $vnetWeb.Id
+Add-AzVirtualNetworkPeering -Name "WebToHub" -VirtualNetwork $vnetWeb -RemoteVirtualNetworkId $vnetHub.Id
+
+# Criar peering entre vnet-hub e vnet-db
+Add-AzVirtualNetworkPeering -Name "HubToDb" -VirtualNetwork $vnetHub -RemoteVirtualNetworkId $vnetDb.Id
+Add-AzVirtualNetworkPeering -Name "DbToHub" -VirtualNetwork $vnetDb -RemoteVirtualNetworkId $vnetHub.Id
+
+# Exibir informações sobre os recursos criados
+Write-Host "Recursos criados com sucesso:"
+Write-Host "Resource Group: $resourceGroupName"
+Write-Host "VNet Hub: $($vnetHub.Name)"
+Write-Host "VNet Web: $($vnetWeb.Name)"
+Write-Host "VNet DB: $($vnetDb.Name)"
+Write-Host "Peerings criados entre vnet-hub e vnet-web, vnet-hub e vnet-db"
  ```
 2- Aplicar Azure Policy
    - Aplicar Policy no nível do Resource Group criado no passo anterior
@@ -23,156 +63,56 @@ O desenho de arquitetura informado abaixo mostra alguns detalhes de como está c
    
 
 
-## STEP02 - Criar a topologia de rede HUB-SPOKE
-Iremos utilizar pelo menos, 5 regiões diferentes do Azure, com o objetivo de atendermos as restrições de vCpus existentes em contas trial do Azure.
 
-1 - Criar a estrutura da VNET-HUB:
-
+## STEP02 - Deploy dos WebApps
+1.0 Criar um App Service Plan:
 ```cmd
-   # Criar um Resource Group
-   Nome: rg-azure
-   Região: East US
-   
-   # VNET-HUB
-   Nome: vnet-hub
-   Região: East-US
-   Adress Space: 10.10.0.0/16
-      
-   # Subnets   
-   Subnet: sub-srv
-   Address Space: 10.10.1.0/24
-   
-   Subnet: sub-db
-   Address Space: 10.10.2.0/24
-   
-   Subnet: sub-pvtendp
-   Address Space: 10.10.252.0/24
-   
-   Subnet: AzureBastionSubnet
-   Address Space: 10.10.250.0/24
-   
-   Subnet: GatewaySubnet
-   Address Space: 10.10.251.0/24
-   
+   Nome: appplan-tftec-001
+   Operation System: Windows
+   Região: uksouth
+   SKU: Standard S1
 ```
 
-2 - Criar a estrutura da VNET-SPOKE01:
-
+1.1 Criar o WebApp do Ingresso
 ```cmd
-   # VNET-SPOKE01
-   Nome: vnet-spoke01
-   Região: UK South
-   Adress Space: 10.20.0.0/16
-   
-   # Subnets
-   Subnet: sub-intra
-   Address Space: 10.20.1.0/24
-     
+   Nome: app-ingresso-tftecxxxx
+   Desmarcar "Unique default hostname"
+   Runtime Stack: .NET 8
+   Operation Sistem: Windows
+   Region: uksouth
+   Escolher o App Service Plan criado no passo anterior
 ```
 
-3 - Criar a estrutura da VNET-SPOKE02:
-
+1.2 Criar o WebApp do Bend (API)
 ```cmd
-   # VNET-SPOKE02
-   Nome: vnet-spoke02
-   Região: Japan East
-   Adress Space: 10.30.0.0/16
-   
-   # Subnets
-   Subnet: sub-web
-   Address Space: 10.30.1.0/24
-   
-   Subnet: sub-appgw
-   Address Space: 10.30.250.0/24
-     
+   Nome: app-bend-tftecxxxx
+   Desmarcar "Unique default hostname"
+   Runtime Stack: .NET 8
+   Operation Sistem: Windows
+   Region: uksouth
+   Escolher o App Service Plan criado no passo anterior
 ```
 
-## STEP03 - Deploy dos NSGs
-Criar 3 NSGs de acordo com o modelo abaixo:
-```cmd
-   Nome: nsg-hub
-   Região: east-us
-   Associar Subnet: sub-srv e sub-db
-```
-
-```cmd
-   Nome: nsg-intra
-   Região: uk-south
-   Associar Subnet: sub-intra
-```
-
-```cmd
-   Nome: nsg-web
-   Região: japan-east
-   Associar Subnet: sub-web
-```
-
-## STEP04 - Deploy das VMs
-Para todas as VMs iremos o tamanho B2S e utilizar o sistema operacional Windows Server 2022.
-
-```cmd
-   # EAST US
-   Nome: vm-apps
-   Região: east-us
-   Vnet: vnet-hub
-   Subnet: sub-srv
-```
-
-```cmd
-OBS: Na conta trial pode não existir a disponibilidade de usar duas Zonas, caso isso aconteça, não utilize nenhuma configuração de alta disponibilidade.
-   # UK SOUTH
-   Nome: vm-intra01
-   Região: uk-south
-   Zone: Zone 1
-   Vnet: vnet-spoke01
-   Subnet: sub-intra
-   
-   Nome: vm-intra02
-   Região: uk-south
-   Zone: Zone 2
-   Vnet: vnet-spoke01
-   Subnet: sub-intra
-```
-
+1.3 Criar o Webapp do CRM
 ```cmd 
-   # JAPAN EAST
-   Nome: vm-web01
-   Região: japan-east
-   Zone: Zone 1
-   Vnet: vnet-spoke02
-   Subnet: sub-web
-   
-   Nome: vm-web02
-   Região: japan-east
-   Zone: Zone 2
-   Vnet: vnet-spoke02
-   Subnet: sub-web
+   Nome: app-crm-tftecxxxx
+   Desmarcar "Unique default hostname"
+   Runtime Stack: .NET 8
+   Operation Sistem: Windows
+   Region: uksouth
+   Escolher o App Service Plan criado no passo anterior
+ ```
+
+ 1.4 Criar o Webapp do Auth
+```cmd 
+   Nome: app-auth-tftecxxxx
+   Desmarcar "Unique default hostname"
+   Runtime Stack: .NET 8
+   Operation Sistem: Windows
+   Region: uksouth
+   Escolher o App Service Plan criado no passo anterior
  ```  
- 
    
-2 - Deploy Azure Bastion
-
-```cmd
-   Nome: bastion01
-   Região: East US
-   SKU: Standard
-   Configuration: Shareable
-```
-
-3 - Desabilitar o firewall de todas as VMs via Run Command, usando o seguinte comando:
-
-```cmd
-Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
-```
-
-4 - Acessar as VMs via Bastion e realizar teste de ping entre VMs de vnets diferentes.
-
-5 - Criar peering entre as seguintes vnets:
-```cmd
-vnet-hub/vnet-spoke01 - vnet-spoke01/vnet-hub
-vnet-hub/vnet-spoke02 - vnet-spoke02/vnet-hub
-```
-4 - Realizar teste de ping entre VMs de vnets diferentes novamente.
 
 ## STEP05 - Configuração de domínios e certificados
 1 - Criar um DNS Zone (Zona de DNS pública no Azure).
