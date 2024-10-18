@@ -112,11 +112,65 @@ Write-Host "Peerings criados entre vnet-hub e vnet-web, vnet-hub e vnet-db"
    Region: uksouth
    Escolher o App Service Plan criado no passo 1.0
  ```  
-   
+2.0 Baixar pacotes das aplicações:
+https://github.com/raphasi/imersaoazure
 
-## STEP05 - Configuração de domínios e certificados
-1 - Criar um DNS Zone (Zona de DNS pública no Azure).
+2.1 Descompactar o .zip e utilizando o cloudshell, fazer upload dos 4 pacotes.
 
+2.2 Realizar o deploy da aplicação BEND (API) para o WebApp
+Abrir o Powershell ou Terminal e executar o seguinte comando:
+```cmd
+az login (ou utilizar o CloudShell)
+az webapp deploy --resource-group rg-azure --name <app-name> --src-path DeploymentGerenciador.zip
+```
+
+2.3 Realizar o deploy da aplicação INGRESSO para o WebApp
+Abrir o Powershell ou Terminal e executar o seguinte comando:
+```cmd
+az login (ou utilizar o CloudShell)
+az webapp deploy --resource-group rg-azure --name <app-name> --src-path DeploymentGerenciador.zip
+```
+
+2.4 Realizar o deploy da aplicação CRM para o WebApp
+Abrir o Powershell ou Terminal e executar o seguinte comando:
+```cmd
+az login (ou utilizar o CloudShell)
+az webapp deploy --resource-group rg-azure --name <app-name> --src-path DeploymentGerenciador.zip
+```
+
+2.5 Realizar o deploy da aplicação AUTH para o WebApp
+Abrir o Powershell ou Terminal e executar o seguinte comando:
+```cmd
+az login (ou utilizar o CloudShell)
+az webapp deploy --resource-group rg-azure --name <app-name> --src-path DeploymentGerenciador.zip
+```
+
+## STEP03 - Deploy do Azure SQL Database
+1.0 Criar um novo SQL Server
+```cmd
+Nome: sqlsrvtftecxxxxx (usar um nome único)
+Location: 
+Authentication method: Use SQL authentication   
+   user: sqladmin
+   pass: Partiunuvem@2024
+Allow Azure services and resources to access this server: YES
+
+```
+1.2 Importar database aplicação WebSite
+```cmd
+Abrir o SQL Management Studio
+Server Name: Copia o nome do SQL Server criado no passo anterior
+Alterar formato de autenticação para SQL Server authentication  
+Logar com usuário e senha criados no passo anterior
+Importar o database usando a opção de dacpac
+*Caso necessário, alterar o nome do database para: sistema-tftec-db
+```
+
+1.3 Ajustar SQL Database
+```cmd
+Ajustar configuração do SQL Database:
+   - Compute + Storage: Mudar opção de backup para LRS
+```
 2 - Apontar registros NS (name server) do provedor público para o Azure.
 Testar a validação do DNS com o seguinte comando:
 ```cmd
