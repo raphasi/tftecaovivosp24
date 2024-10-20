@@ -297,7 +297,7 @@ O resultado deve retornar o código 200 e uma lista com dados de clientes
 
 
 
-## STEP06 - Deploy do Tenant do Azure B2C
+## STEP07 - Deploy do Tenant do Azure B2C
 1.0 Criar um novo Azure Active Directory B2C
 ```cmd
 Cllicar em "Create a resource"
@@ -309,18 +309,26 @@ Escolher o Resource Group: rg-tftecsp
 ```
 
 
-
-1.1 Gerar um certificado digital válido:
+## STEP08 - Deploy certificados Digitais
+1.0 Gerar um certificado digital válido:
 https://punchsalad.com/ssl-certificate-generator/
+```cmd
+Criar um certificado digital para a URL que será utilizada em cada uma das aplicações (usando como sufixo o seu domínio público.)
+```
 
-1.2 Converter o certificado para PFX:
+1.1 Converter o certificado para PFX:
 https://www.sslshopper.com/ssl-converter.html
+```cmd
+Gerar o certificado cno formato pfx
+Cadastrar uma senha simples para o certificado. Exemplo: tftec2024
+```
 
-1.3 repetir o passo de criação 3 vezes:
+1.2 repetir o passo de criação 3 vezes:
+```cmd
  - Certificado para aplicação INGRESSO
  - Certificado para aplicação BEND (api)
  - Certificado para aplicação CRM
-
+```
 
 ## STEP07 - Deploy Azure Key Vault
 1- Deploy Azure Key Vault:
