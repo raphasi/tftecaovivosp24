@@ -367,7 +367,7 @@ Cadastrar uma senha simples para o certificado. Exemplo: tftec2024
 
 
 
-##### PASSOS UTILIZADOS NO EVENTO DE 2023 ######
+# PASSOS UTILIZADOS NO EVENTO DE 2023 #
 
 
 
