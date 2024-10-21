@@ -384,7 +384,7 @@ Associar todas as vnets a zona de DNS do private endpoint
 ## STEP12 - Deploy do Application Gateway
 1.0 Deploy Application Gateway
 ```cmd
-Resource group: rg-tftecsp-prd
+**Resource group:** rg-tftecsp-prd
 Name: appgw-web-001
 Region: uksouth
 Tier: Standard v2
