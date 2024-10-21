@@ -345,17 +345,45 @@ Cadastrar uma senha simples para o certificado. Exemplo: tftec2024
    Fazer upload do certificado pfx da aplicação BEND (API)
 ```
 
+## STEP10 - Ajustar configurações de VNET Integration para os WebApps
+1.0 Configurar o vnet integration para o app INGRESSO:
+```cmd
+Configurar a parte de Networking do WebApp, adicionando o Virtual network integration apontando para subnet sub-vint-webapp-001
+```
+1.1 Configurar o vnet integration para o app BEND(API):
+```cmd
+Configurar a parte de Networking do WebApp, adicionando o Virtual network integration apontando para subnet sub-vint-webapp-001
+```
+1.2 Configurar o vnet integration para o app CRM:
+```cmd
+Configurar a parte de Networking do WebApp, adicionando o Virtual network integration apontando para subnet sub-vint-webapp-001
+```
+1.3 Configurar o vnet integration para o app AUTH:
+```cmd
+Configurar a parte de Networking do WebApp, adicionando o Virtual network integration apontando para subnet sub-vint-webapp-001
+```
+
+## STEP11 - Configurar o Private Endpoint para o Azure SQL Database
+1.0 Ajustar configuração de rede para SQL Server Acessar o SQL Server criado e ajustar configuração de Networking:
+```cmd
+Add Private Endpoint: pvt-sqldb-001
+Usar pvt enpdoint na vnet-hub e subnet sub-pvtendp
+Criar a zona de DNS privada para o private endpoint
+Public network acess: Disable
+```
+1.1 Associar VNET-SPOKE02 a Zona de DNS do Private Endpoint:
+```cmd
+Acessar a zona de dns criada pelo private endpoint: privatelink.database.windows.net
+Associar todas as vnets a zona de DNS do private endpoint
+```
 
 
 
-
-
-
-
-
-
-
-
+## STEP11 - Deploy do Application Gateway
+1.0 
+```cmd
+Configurar 
+```
 
 
 
