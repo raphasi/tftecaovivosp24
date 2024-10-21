@@ -426,14 +426,14 @@ Backend settings
 Backend settings name: sts-crm-https
 Protocol: HTTPS
 Override with new host name: YES
-Host name: FQDN do seu WebApp de crm
+Host name: Default domain do seu WebApp de CRM
 ```
 Health probes
 ```cmd
 Name: proble-crm
 Protocol: HTTPS
-Host: FQDN default do seu WebApp
-Path: /swagger
+Host: Default domain do seu WebApp de CRM
+Path: /
 Backend settings: sts-crm-https
 ```
 Listeners
@@ -451,11 +451,53 @@ Rules
 Rule name: web-crm-https
 Priority: 102
 Listener: lst-web-crm-https
-
 Backend targets
 Target type: Backend pool
 Backend target: bpool-crm
 Backend settings:  sts-auth-https 
+```
+
+1.2 Configuração do App BEND (API):
+Backend pools
+```cmd
+Adicionar um backendpool
+Name: bpool-bend
+Target type: App Services (Associar ao WebApp de BEND)
+```
+Backend settings
+```cmd
+Backend settings name: sts-bend-https
+Protocol: HTTPS
+Override with new host name: YES
+Host name: Default domain do seu WebApp de BEND
+```
+Health probes
+```cmd
+Name: proble-bend
+Protocol: HTTPS
+Host: Default domain do seu WebApp de BEND
+Path: /swagger
+Backend settings: sts-bend-https
+```
+Listeners
+```cmd
+Listener name: lst-web-bend-https
+Frontend IP: Public
+Protocol: HTTPS
+Choose a certificate: Create new
+Selecionar o certificado referente a aplicação BEND
+Listener type: Multi site
+Hostname: api.seudominiopublico
+```
+Rules
+```cmd
+Rule name: web-bend-https
+Priority: 103
+Listener: lst-web-bend-https
+Backend targets
+Target type: Backend pool
+Backend target: bpool-bend
+Backend settings:  sts-bend-https 
 ```
 
 
