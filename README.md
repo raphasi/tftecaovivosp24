@@ -382,9 +382,9 @@ Associar todas as vnets a zona de DNS do private endpoint
 
 
 ## STEP12 - Deploy do Application Gateway
-1.0 **Deploy Application Gateway**
+1.0 Deploy Application Gateway e configuração do App Ingresso:
 ```cmd
-**Resource group:** rg-tftecsp-prd
+Resource group: rg-tftecsp-prd
 Name: appgw-web-001
 Region: uksouth
 Tier: Standard v2
@@ -412,10 +412,51 @@ Backend settings: Add new
 Backend settings name: sts-ingresso-https
 Backend server’s certificate is issued by a well-known CA: YES
 Override with new host name: YES
-Host name: URL do seu WebApp de ingresso
+Host name: FQDN do seu WebApp de ingresso
 ```
+1.1 Configuração do App CRM:
+Backend pools
+```cmd
+Adicionar um backendpool
+Name: bpool-crm
+Target type: App Services (Associar ao WebApp de CRM)
+```
+Backend settings
+```cmd
+Backend settings name: sts-crm-https
+Protocol: HTTPS
+Override with new host name: YES
+Host name: FQDN do seu WebApp de crm
+```
+Health probes
+```cmd
+Name: proble-crm
+Protocol: HTTPS
+Host: FQDN default do seu WebApp
+Path: /swagger
+Backend settings: sts-crm-https
+```
+Listeners
+```cmd
+Listener name: lst-web-crm-https
+Frontend IP: Public
+Protocol: HTTPS
+Choose a certificate: Create new
+Selecionar o certificado referente a aplicação CRM
+Listener type: Multi site
+Hostname: crm.seudominiopublico
+```
+Rules
+```cmd
+Rule name: web-crm-https
+Priority: 102
+Listener: lst-web-crm-https
 
-
+Backend targets
+Target type: Backend pool
+Backend target: bpool-crm
+Backend settings:  sts-auth-https 
+```
 
 
 
