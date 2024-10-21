@@ -378,11 +378,41 @@ Associar todas as vnets a zona de DNS do private endpoint
 ```
 
 
+## STEP11 - Criar um Managed Identity
 
-## STEP11 - Deploy do Application Gateway
-1.0 
+
+## STEP12 - Deploy do Application Gateway
+1.0 Deploy Application Gateway
 ```cmd
-Configurar 
+Resource group: rg-tftecsp-prd
+Name: appgw-web-001
+Region: uksouth
+Tier: Standard v2
+Enable autoscaling: Yes
+IP address type: IPV4 only
+Virtual Network: vnet-spoke-001
+Subnet: sub-appgw-001
+Frontend IP address type: Public
+Create Public IPV4: pip-appgw-001
+Add a backend pool: bpool-ingresso (Associar ao WebApp de Ingresso)
+Add a routing rule
+Rule name: web-ingresso-https
+Priority: 100
+Listener name: lst-ing-https
+Protocol: HTTPS
+Choose a certificate from Key Vault
+Cert name: cert-ingresso
+Managed identity: mngid-kv-001
+Certificate: cert-ingresso
+Listener type: Multi site
+Host name: ingresso.seudominiopublico
+Target type: Backend pool
+Backend target: bpool.ingresso
+Backend settings: Add new
+Backend settings name: sts-ingresso-https
+Backend server’s certificate is issued by a well-known CA: YES
+Override with new host name: YES
+Host name: URL do seu WebApp de ingresso
 ```
 
 
