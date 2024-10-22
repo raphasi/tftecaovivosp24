@@ -279,6 +279,7 @@ DESCREVER OS PASSOS PARA CONFIGURAÇÃO DOS FLUXOS
 ```cmd
 DESCREVER OS PASSOS PARA CONFIGURAÇÃO DO APPREGISTRATION
 ```
+
 1.1 Criar o App Registration CRM02
 ```cmd
 DESCREVER OS PASSOS PARA CONFIGURAÇÃO DO APPREGISTRATION
@@ -339,10 +340,62 @@ INGRESSO: Realizar o cadastro de um usuário no site utilizando AZURE B2C e real
 CRM: Realizar a autenticação utilizando um usuário com permissão no Entra ID e validar a compra realizada no passo anterior.
 ```
 
+## STEP11 - Realizar ajustes de conectividade no SQL Database e WebApps
+1.0 Configurar o SQL Database para trabalhar com private endpoint
+```cmd
+Acessar o menu Networking
+Public network access: Disable
+Private Access - Criar um private endpoint
+Name: pvt-endp-sql-001
+Network Interface Name: pvt-endp-sql-001-nic
+Region: uksouth
+Target sub-resource: sqlServer
+Virtual network: vnet-spk-001
+Subnet: sub-db-001
+Dynamically allocate IP address
+```
+1.1 Configurar VNET Integration para o WebApps INGRESSO
+```cmd
+Acessar o menu Networking
+Clicar em Virtual network integration - Not configured
+Add Virtual Network Integration
+Virtual Network: vnet-spk-001
+Subnet: sub-vint-001
+```
+
+1.2 Configurar VNET Integration para o WebApps CRM
+```cmd
+Acessar o menu Networking
+Clicar em Virtual network integration - Not configured
+Add Virtual Network Integration
+Selecionar a connection já criada no passo anterior
+```
+
+1.3 Configurar VNET Integration para o WebApps BEND
+```cmd
+Acessar o menu Networking
+Clicar em Virtual network integration - Not configured
+Add Virtual Network Integration
+Selecionar a connection já criada no passo anterior
+```
+
+1.4 Configurar VNET Integration para o WebApps AUTH
+```cmd
+Acessar o menu Networking
+Clicar em Virtual network integration - Not configured
+Add Virtual Network Integration
+Selecionar a connection já criada no passo anterior
+```
+
+1.5 Realizar testes de acesso
+```cmd
+Teste via BEND - Swagger
+Teste de login no CRM via Entra ID
+Teste de login B2C no CRM
+```
 
 
-
-## STEP09 - Deploy certificados Digitais
+## STEP12 - Deploy certificados Digitais
 1.0 Gerar um certificado digital válido:
 https://punchsalad.com/ssl-certificate-generator/
 ```cmd
@@ -363,7 +416,7 @@ Cadastrar uma senha simples para o certificado. Exemplo: tftec2024
  - Certificado para aplicação CRM
 ```
 
-## STEP10 - Deploy Azure Key Vault
+## STEP13 - Deploy Azure Key Vault
 1- Deploy Azure Key Vault:
 ```cmd
    Nome: kvault-tftec-001
@@ -378,40 +431,7 @@ Cadastrar uma senha simples para o certificado. Exemplo: tftec2024
    Fazer upload do certificado pfx da aplicação BEND (API)
 ```
 
-## STEP10 - Ajustar configurações de VNET Integration para os WebApps
-1.0 Configurar o vnet integration para o app INGRESSO:
-```cmd
-Configurar a parte de Networking do WebApp, adicionando o Virtual network integration apontando para subnet sub-vint-webapp-001
-```
-1.1 Configurar o vnet integration para o app BEND(API):
-```cmd
-Configurar a parte de Networking do WebApp, adicionando o Virtual network integration apontando para subnet sub-vint-webapp-001
-```
-1.2 Configurar o vnet integration para o app CRM:
-```cmd
-Configurar a parte de Networking do WebApp, adicionando o Virtual network integration apontando para subnet sub-vint-webapp-001
-```
-1.3 Configurar o vnet integration para o app AUTH:
-```cmd
-Configurar a parte de Networking do WebApp, adicionando o Virtual network integration apontando para subnet sub-vint-webapp-001
-```
-
-## STEP11 - Configurar o Private Endpoint para o Azure SQL Database
-1.0 Ajustar configuração de rede para SQL Server Acessar o SQL Server criado e ajustar configuração de Networking:
-```cmd
-Add Private Endpoint: pvt-sqldb-001
-Usar pvt enpdoint na vnet-hub e subnet sub-pvtendp
-Criar a zona de DNS privada para o private endpoint
-Public network acess: Disable
-```
-1.1 Associar VNET-SPOKE02 a Zona de DNS do Private Endpoint:
-```cmd
-Acessar a zona de dns criada pelo private endpoint: privatelink.database.windows.net
-Associar todas as vnets a zona de DNS do private endpoint
-```
-
-
-## STEP11 - Criar um Managed Identity
+## STEP14 - Criar um Managed Identity
 
 
 ## STEP12 - Deploy do Application Gateway
