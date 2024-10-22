@@ -277,31 +277,17 @@ DESCREVER OS PASSOS PARA CONFIGURAÇÃO DOS FLUXOS
 ## STEP06 - Deploy Apps Registration para o CRM
 1.0 Criar o App Registration CRM01
 ```cmd
-Cllicar em "Create a resource"
-Digitar a opção "Azure Active Directory B2C"
-Escolher "Create a new Azure AD B2C Tenant"
-Digitar um nome para a organização
-Digitar um domain name para a organização
-Escolher o Resource Group: rg-tftecsp
+DESCREVER OS PASSOS PARA CONFIGURAÇÃO DO APPREGISTRATION
 ```
 1.1 Criar o App Registration CRM02
 ```cmd
-Cllicar em "Create a resource"
-Digitar a opção "Azure Active Directory B2C"
-Escolher "Create a new Azure AD B2C Tenant"
-Digitar um nome para a organização
-Digitar um domain name para a organização
-Escolher o Resource Group: rg-tftecsp
+DESCREVER OS PASSOS PARA CONFIGURAÇÃO DO APPREGISTRATION
 ```
 
 ## STEP07 - Configurar as variáveis de ambiente crm
 1.0 Configurar as variáveis de ambiente da aplicação CRM
 ```cmd
-Acessar o endereço do webapp de BEND (API) complementando com o \swagger
-(Exemplo: https://appbendsp-dev.azurewebsites.net/swagger)
-Escolher a seção "Customer" e clicar no GET /api/Customer
-Clicar em "Try it out" e "execute"
-O resultado deve retornar o código 200 e uma lista com dados de clientes
+DESCREVER OS PASSOS PARA CONFIGURAÇÃO DAS VARIÁVEIS DE AMBIENTE
 ```
 
 1.1 Testar o acesso CRM autenticando com o Entra ID
@@ -324,49 +310,34 @@ Escolher o Resource Group: rg-tftecsp
 ## STEP09 - Deploy Apps Registration demais aplicações
 1.0 Criar o App Registration 03
 ```cmd
-Cllicar em "Create a resource"
-Digitar a opção "Azure Active Directory B2C"
-Escolher "Create a new Azure AD B2C Tenant"
-Digitar um nome para a organização
-Digitar um domain name para a organização
-Escolher o Resource Group: rg-tftecsp
+DESCREVER OS PASSOS PARA CONFIGURAÇÃO DO APPREGISTRATION
 ```
 1.1 Criar o App Registration 04
 ```cmd
-Cllicar em "Create a resource"
-Digitar a opção "Azure Active Directory B2C"
-Escolher "Create a new Azure AD B2C Tenant"
-Digitar um nome para a organização
-Digitar um domain name para a organização
-Escolher o Resource Group: rg-tftecsp
+DESCREVER OS PASSOS PARA CONFIGURAÇÃO DO APPREGISTRATION
 ```
 
 ## STEP07 - Configurar as variáveis de ambiente demais ambientes
 1.0 Configurar as variáveis de ambiente da aplicação INGRESSO
 ```cmd
-Acessar o endereço do webapp de BEND (API) complementando com o \swagger
-(Exemplo: https://appbendsp-dev.azurewebsites.net/swagger)
-Escolher a seção "Customer" e clicar no GET /api/Customer
-Clicar em "Try it out" e "execute"
-O resultado deve retornar o código 200 e uma lista com dados de clientes
+DESCREVER OS PASSOS PARA CONFIGURAÇÃO DAS VARIÁVEIS DE AMBIENTE DA APLICAÇÃO INGRESSO
 ```
 1.1 Configurar as variáveis de ambiente da aplicação BEND
 ```cmd
-Acessar o endereço do webapp de BEND (API) complementando com o \swagger
-(Exemplo: https://appbendsp-dev.azurewebsites.net/swagger)
-Escolher a seção "Customer" e clicar no GET /api/Customer
-Clicar em "Try it out" e "execute"
-O resultado deve retornar o código 200 e uma lista com dados de clientes
+DESCREVER OS PASSOS PARA CONFIGURAÇÃO DAS VARIÁVEIS DE AMBIENTE DA APLICAÇÃO BEND
 ```
 1.2 Configurar as variáveis de ambiente da aplicação AUTH
 ```cmd
-Acessar o endereço do webapp de BEND (API) complementando com o \swagger
-(Exemplo: https://appbendsp-dev.azurewebsites.net/swagger)
-Escolher a seção "Customer" e clicar no GET /api/Customer
-Clicar em "Try it out" e "execute"
-O resultado deve retornar o código 200 e uma lista com dados de clientes
+DESCREVER OS PASSOS PARA CONFIGURAÇÃO DAS VARIÁVEIS DE AMBIENTE DA APLICAÇÃO AUTH
 ```
 
+## STEP10 - Realizar teste completo para todas as aplicações
+1.0 Testar experiência no ambiente de Compra e CRM
+```cmd
+BEND: Realizar um teste de GET nos dados de custumer
+INGRESSO: Realizar o cadastro de um usuário no site utilizando AZURE B2C e realizar uma compra de produto.
+CRM: Realizar a autenticação utilizando um usuário com permissão no Entra ID e validar a compra realizada no passo anterior.
+```
 
 
 
