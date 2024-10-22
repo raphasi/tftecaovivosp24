@@ -197,38 +197,28 @@ https://github.com/raphasi/imersaoazure
 Abrir o Powershell ou Terminal e executar o seguinte comando:
 ```cmd
 az login (ou utilizar o CloudShell)
-az webapp deploy --resource-group rg-azure --name <app-name> --src-path DeploymentGerenciador.zip
+az webapp deploy --resource-group rg-azure --name app-ingresso-tftec --src-path ingresso.zip
 ```
 
 2.3 Realizar o deploy da aplicação INGRESSO para o WebApp
 Abrir o Powershell ou Terminal e executar o seguinte comando:
 ```cmd
 az login (ou utilizar o CloudShell)
-az webapp deploy --resource-group rg-azure --name <app-name> --src-path DeploymentGerenciador.zip
+az webapp deploy --resource-group rg-azure --name app-bend-tftec --src-path bend.zip
 ```
 
 2.4 Realizar o deploy da aplicação CRM para o WebApp
 Abrir o Powershell ou Terminal e executar o seguinte comando:
 ```cmd
 az login (ou utilizar o CloudShell)
-az webapp deploy --resource-group rg-azure --name <app-name> --src-path DeploymentGerenciador.zip
+az webapp deploy --resource-group rg-azure --name app-crm --src-path crm.zip
 ```
 
 2.5 Realizar o deploy da aplicação AUTH para o WebApp
 Abrir o Powershell ou Terminal e executar o seguinte comando:
 ```cmd
 az login (ou utilizar o CloudShell)
-az webapp deploy --resource-group rg-azure --name <app-name> --src-path DeploymentGerenciador.zip
-```
-
-## STEP03 - Deploy Virtual Machine
-1.0 Utilizaremos uma VM tamanho B2S e utilizar o sistema operacional Windows Server 2022.
-
-```cmd
-   Nome: vm-apps
-   Região: east-us
-   Vnet: vnet-hub
-   Subnet: sub-srv
+az webapp deploy --resource-group rg-azure --name app-auth --src-path app-auth.zip
 ```
 
 ## STEP04 - Deploy do Azure SQL Database
