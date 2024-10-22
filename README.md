@@ -10,6 +10,7 @@ O desenho de arquitetura informado abaixo mostra alguns detalhes de como está c
 
 ## STEP01 - Criar um Resource Group e estrutura de VNETS e Subnets
 1- Script PowerShell para criar estrutura de rede inicial
+Realizar download do Script e importar no Azure CloudShell: https://github.com/raphasi/tftecaovivosp24/blob/main/Script_Landing_Zone.ps1
 ```cmd
 ## Script: Criar Landing Zone - TFTEC ao VIVO SP
 ## Autor: Raphael Andrade
