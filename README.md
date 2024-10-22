@@ -426,23 +426,23 @@ Cadastrar uma senha simples para o certificado. Exemplo: tftec2024
 
 1.1 Fazer upload dos certificado PFX no Key Vault
 ```cmd
-   Fazer upload do certificado pfx da aplicação INGRESSO
-   Fazer upload do certificado pfx da aplicação CRM
-   Fazer upload do certificado pfx da aplicação BEND (API)
+Fazer upload do certificado pfx da aplicação INGRESSO
+Fazer upload do certificado pfx da aplicação CRM
+Fazer upload do certificado pfx da aplicação BEND (API)
 ```
 
 ## STEP14 - Criar um Managed Identity
 1.0 Criar um Managed Identity para liberar acesso do AppGw aos certificados do KeyVault
 ```cmd
-   Resource Group: rg-tftecsp-001
-   Region: uksouth
-   Name: mgtid-kvault-certs
+Resource Group: rg-tftecsp-001
+Region: uksouth
+Name: mgtid-kvault-certs
 ```
 1.2 Liberando acesso do Managed Identity no Key Vault
 ```cmd
-   Acessar o Key Vault crido no STEP12
-   Adicionar uma Access policies
-   Secret e Certification permitions: GET
+Acessar o Key Vault crido no STEP12
+Adicionar uma Access policies
+Secret e Certification permitions: GET
 ```
 
 ## STEP15 - Deploy do Application Gateway
@@ -564,9 +564,36 @@ Backend target: bpool-bend
 Backend settings:  sts-bend-https 
 ```
 
+## STEP16 - Ajustar URLs de autenticação
+1.0 Ajustar as URLs de autenticação OIDC nos App Registrations
+```cmd
+Acessar o APP Registrartion e alterar a URL xxxxxx
+Acessar o APP Registrartion e alterar a URL xxxxxx
+Acessar o APP Registrartion e alterar a URL xxxxxx
+Acessar o APP Registrartion e alterar a URL xxxxxx
+```
+1.1 Ajustar as URLs de autenticação OIDC nos WebApps
+```cmd
+Acessar o WebApp xxx e alterar a URL xxxxxx
+Acessar o WebApp xxx e alterar a URL xxxxxx
+```
 
 
-
+## STEP17 - Configurar o Application Insights
+1.0 Realizar o deploy do Log Analytics workspaces
+```cmd
+Resource group: rg-tftecsp-001
+Name: wksloganl001
+Region: uksouth
+```
+1.1 Habilitar o Application Insights no WebApp Ingresso
+```cmd
+Habilitar o Application Insights direcionando os logs para o Workspace criado no passo 1.0
+```
+1.2 Habilitar o Application Insights no WebApp BEND
+```cmd
+Habilitar o Application Insights direcionando os logs para o Workspace criado no passo 1.0
+```
 
 
 
