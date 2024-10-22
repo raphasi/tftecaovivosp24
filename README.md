@@ -417,14 +417,14 @@ Cadastrar uma senha simples para o certificado. Exemplo: tftec2024
 ```
 
 ## STEP13 - Deploy Azure Key Vault
-1- Deploy Azure Key Vault:
+1.0 Deploy Azure Key Vault:
 ```cmd
    Nome: kvault-tftec-001
    Região: uksouth
    Configurar o acesso ao Key Vault como Access Policy
 ```
 
-2- Fazer upload dos certificado PFX no Key Vault
+1.1 Fazer upload dos certificado PFX no Key Vault
 ```cmd
    Fazer upload do certificado pfx da aplicação INGRESSO
    Fazer upload do certificado pfx da aplicação CRM
@@ -432,9 +432,20 @@ Cadastrar uma senha simples para o certificado. Exemplo: tftec2024
 ```
 
 ## STEP14 - Criar um Managed Identity
+1.0 Criar um Managed Identity para liberar acesso do AppGw aos certificados do KeyVault
+```cmd
+   Resource Group: rg-tftecsp-001
+   Region: uksouth
+   Name: mgtid-kvault-certs
+```
+1.2 Liberando acesso do Managed Identity no Key Vault
+```cmd
+   Acessar o Key Vault crido no STEP12
+   Adicionar uma Access policies
+   Secret e Certification permitions: GET
+```
 
-
-## STEP12 - Deploy do Application Gateway
+## STEP15 - Deploy do Application Gateway
 1.0 Deploy Application Gateway e configuração do App Ingresso:
 ```cmd
 Resource group: rg-tftecsp-prd
