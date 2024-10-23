@@ -131,7 +131,22 @@ $ctx = $storageAccount.Context
 New-AzStorageContainer -Name "imagens" -Context $ctx -Permission Off
 
 Write-Output "Storage Account criada: $storageAccountName"
+
+# Criar Storage Account DEV
+$storageAccountName = "stotftecspdev" + (Get-Random -Minimum 100000 -Maximum 999999)
+$storageAccount = New-AzStorageAccount -ResourceGroupName $resourceGroupName `
+                                       -Name $storageAccountName `
+                                       -Location $location01 `
+                                       -SkuName Standard_LRS `
+                                       -Kind StorageV2
+
+# Criar container 'imagens' na Storage Account
+$ctx = $storageAccount.Context
+New-AzStorageContainer -Name "imagens" -Context $ctx -Permission Off
+
+Write-Output "Storage Account criada: $storageAccountName"
  ```
+
 2- Aplicar Azure Policy
    - Aplicar Policy no nível do Resource Group criado no passo anterior
    - Aplicar policy para recursos herdarem a TAG do RG-AZURE (Inherit a tag from the resource group)
