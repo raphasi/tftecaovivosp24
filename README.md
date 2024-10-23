@@ -580,7 +580,7 @@ Acessar o WebApp xxx e alterar a URL xxxxxx
 
 
 ## STEP17 - Configurar o Application Insights
-1.0 Realizar o deploy do Log Analytics workspaces
+1.0 Realizar o deploy do Log Analytics Workspaces
 ```cmd
 Resource group: rg-tftecsp-001
 Name: wksloganl001
@@ -594,6 +594,44 @@ Habilitar o Application Insights direcionando os logs para o Workspace criado no
 ```cmd
 Habilitar o Application Insights direcionando os logs para o Workspace criado no passo 1.0
 ```
+
+## STEP18 - Deploy WebApp SLOTS
+1.0 Criar um slot para o WebApp do INGRESSO
+```cmd
+Acessar o WebApp INGRESSO
+Ir na opção Deployment slots - Add slot
+Name: dev (ele irá complementar o nome com o default name do WebApp principal
+Clone settings from: Do not clone settings
+```
+1.1 Criar um slot para o WebApp do CRM
+```cmd
+Acessar o WebApp CRM
+Ir na opção Deployment slots - Add slot
+Name: dev (ele irá complementar o nome com o default name do WebApp principal
+Clone settings from: Do not clone settings
+```
+1.1 Criar um slot para o WebApp do BEND
+```cmd
+Acessar o WebApp BEND
+Ir na opção Deployment slots - Add slot
+Name: dev (ele irá complementar o nome com o default name do WebApp principal
+Clone settings from: Do not clone settings
+```
+
+## STEP19 - Criar banco de DEV
+1.0 Criar uma base no Azure SQL Database para DEV
+```cmd
+Acessar o o database de produção sistema-tftec-db
+Selecionar a opção de copy
+Database name sistema-tftec-db-dev
+Server: o mesmo de produção
+Want to use SQL elastic pool?: NO
+Compute + storage: Basic
+Backup storage redundancy: Locally-redundant backup storage
+```
+
+
+
 
 
 
