@@ -272,6 +272,11 @@ Ajustar configuração do SQL Database:
 1.0 Configurar conexão BEND x SQL Database
 ```cmd
 Realizar o ajuste da connection string no WebApp BEND
+Name: DefaultConnection
+Value: Data Source=srv-dbtftecsp-dev.database.windows.net,1433;Initial Catalog=sistema-tftec-db;User ID=sqladmin;Password=Partiunuvem@2024;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+*Alterar para o nome do seu banco e validar o usuário e senha
+Type: AzureSQL
+Deployment slot setting: SIM (checar)
 Testar o Swagger validando uma consulta no banco
 ```
 
