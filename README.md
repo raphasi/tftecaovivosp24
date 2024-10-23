@@ -630,9 +630,51 @@ Compute + storage: Basic
 Backup storage redundancy: Locally-redundant backup storage
 ```
 
+## STEP20 - Ajuste Connection String DEV e Private Connections
+1.1 Configurar VNET Integration para o WebApps BEND-DEV
+```cmd
+Acessar o menu Networking
+Clicar em Virtual network integration - Not configured
+Add Virtual Network Integration
+Virtual Network: vnet-spk-001
+Subnet: sub-vint-001
+```
+1.2 Configurar VNET Integration para o WebApps INGRESSO-DEV
+```cmd
+Acessar o menu Networking
+Clicar em Virtual network integration - Not configured
+Add Virtual Network Integration
+Virtual Network: vnet-spk-001
+Subnet: sub-vint-001
+```
+1.2 Configurar VNET Integration para o WebApps CRM-DEV
+```cmd
+Acessar o menu Networking
+Clicar em Virtual network integration - Not configured
+Add Virtual Network Integration
+Virtual Network: vnet-spk-001
+Subnet: sub-vint-001
+```
 
+2.0 Configurar conexão BEND-DEV x SQL Database DEV
+```cmd
+Realizar o ajuste da connection string no WebApp BEND-DEV
+Testar o Swagger validando uma consulta no banco
+```
 
-
+## STEP21 - Configurar as variáveis de ambiente para os SLOTs de DEV
+1.0 Configurar as variáveis de ambiente da aplicação INGRESSO-DEV
+```cmd
+DESCREVER OS PASSOS PARA CONFIGURAÇÃO DAS VARIÁVEIS DE AMBIENTE DA APLICAÇÃO INGRESSO
+```
+1.1 Configurar as variáveis de ambiente da aplicação BEND-DEV
+```cmd
+DESCREVER OS PASSOS PARA CONFIGURAÇÃO DAS VARIÁVEIS DE AMBIENTE DA APLICAÇÃO BEND
+```
+1.1 Configurar as variáveis de ambiente da aplicação CRM-DEV
+```cmd
+DESCREVER OS PASSOS PARA CONFIGURAÇÃO DAS VARIÁVEIS DE AMBIENTE DA APLICAÇÃO BEND
+```
 
 
 
