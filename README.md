@@ -124,7 +124,7 @@ $storageAccount = New-AzStorageAccount -ResourceGroupName $resourceGroupName `
                                        -Name $storageAccountName `
                                        -Location $location01 `
                                        -SkuName Standard_LRS `
-                                       -Kind StorageV2
+                                       -Kind StorageV2 `
                                        -AllowBlobPublicAccess $true
 
 # Criar container 'imagens' na Storage Account
