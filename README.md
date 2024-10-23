@@ -19,7 +19,7 @@ Realizar download do Script e importar no Azure CloudShell: https://github.com/r
 # Definir variáveis
 $resourceGroupName = "rg-tftecsp-001"
 $location01 = "uksouth"
-$location02 = "eastus"
+$location02 = "brazilsouth"
 
 # Criar Resource Group
 New-AzResourceGroup -Name $resourceGroupName -Location $location01
@@ -55,13 +55,13 @@ $subnetConfigSpoke = @(
     New-AzVirtualNetworkSubnetConfig -Name "sub-aks-001" -AddressPrefix "10.11.2.0/24"
     New-AzVirtualNetworkSubnetConfig -Name "sub-appgw-001" -AddressPrefix "10.11.3.0/24"
     New-AzVirtualNetworkSubnetConfig -Name "sub-vint-001" -AddressPrefix "10.11.4.0/24"
-    New-AzVirtualNetworkSubnetConfig -Name "sub-pvte-001" -AddressPrefix "10.11.5.0/24"
+    New-AzVirtualNetworkSubnetConfig -Name "sub-db-001" -AddressPrefix "10.11.5.0/24"
 )
 $vnetSpoke = New-AzVirtualNetwork -ResourceGroupName $resourceGroupName -Location $location01 -Name "vnet-spk-001" -AddressPrefix "10.11.0.0/16" -Subnet $subnetConfigSpoke
 
 # Criar NSG Spoke e associar às subnets
 $nsgSpoke = New-AzNetworkSecurityGroup -ResourceGroupName $resourceGroupName -Location $location01 -Name "nsg-spk-001"
-$subnetsToAssociate = @("sub-web-001", "sub-aks-001", "sub-vint-001", "sub-pvte-001")
+$subnetsToAssociate = @("sub-web-001", "sub-aks-001", "sub-vint-001", "sub-db-001")
 foreach ($subnetName in $subnetsToAssociate) {
     Set-AzVirtualNetworkSubnetConfig -VirtualNetwork $vnetSpoke -Name $subnetName -AddressPrefix ($vnetSpoke.Subnets | Where-Object {$_.Name -eq $subnetName}).AddressPrefix -NetworkSecurityGroup $nsgSpoke
 }
@@ -118,19 +118,21 @@ $vmConfig = Set-AzVMOSDisk -VM $vmConfig -CreateOption FromImage -StorageAccount
 # Criar a VM
 New-AzVM -ResourceGroupName $resourceGroupName -Location $location02 -VM $vmConfig
 
-# Criar Storage Account
+# Criar Storage Account PRD
 $storageAccountName = "stotftecsp" + (Get-Random -Minimum 100000 -Maximum 999999)
 $storageAccount = New-AzStorageAccount -ResourceGroupName $resourceGroupName `
                                        -Name $storageAccountName `
                                        -Location $location01 `
                                        -SkuName Standard_LRS `
                                        -Kind StorageV2
+                                       -AllowBlobPublicAccess $true
 
 # Criar container 'imagens' na Storage Account
 $ctx = $storageAccount.Context
-New-AzStorageContainer -Name "imagens" -Context $ctx -Permission Off
+New-AzStorageContainer -Name "imagens" -Context $ctx -Permission Blob
 
 Write-Output "Storage Account criada: $storageAccountName"
+
 
 # Criar Storage Account DEV
 $storageAccountName = "stotftecspdev" + (Get-Random -Minimum 100000 -Maximum 999999)
@@ -138,11 +140,12 @@ $storageAccount = New-AzStorageAccount -ResourceGroupName $resourceGroupName `
                                        -Name $storageAccountName `
                                        -Location $location01 `
                                        -SkuName Standard_LRS `
-                                       -Kind StorageV2
+                                       -Kind StorageV2 `
+                                       -AllowBlobPublicAccess $true
 
-# Criar container 'imagens' na Storage Account
+# Criar container 'imagens' na Storage Account com acesso de leitura anônimo para blobs
 $ctx = $storageAccount.Context
-New-AzStorageContainer -Name "imagens" -Context $ctx -Permission Off
+New-AzStorageContainer -Name "imagens" -Context $ctx -Permission Blob
 
 Write-Output "Storage Account criada: $storageAccountName"
  ```
